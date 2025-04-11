@@ -1,0 +1,12 @@
+instructor
+10
+00001;Duhoe;compsci;10000
+00002;Echae;compsci;11000
+00003;Jaeho;compsci;20000
+00004;Jaeun;null ;null 
+00005;null ;history;null 
+00006;Hwani;null ;30000
+00007;Drake;Musical;40000
+00008;Prong;history;null 
+00009;null ;Musical;15000
+00010;null ;null ;null 
