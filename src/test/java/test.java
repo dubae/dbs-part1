@@ -1,5 +1,4 @@
-import org.example.object.Block;
-import org.example.object.SeqFileHeader;
+import org.example.system.MysqlSystem;
 import org.example.system.SeqFileSystem;
 
 import java.io.IOException;
@@ -15,29 +14,31 @@ public class test {
     public static void main(String[] args) throws IOException {
 
 
-        //SeqFileSystem.insertRecordsByTxt("/Users/duhoe/Desktop/dev/DBSystem/DBS-design1/record_input.txt");
+        //test_join_insertion();
+        test_join("instructor", "teaches");
 
-    //    SeqFileSystem.createNewSeqFile("instructor;ID name dept_name salary;5 5 7 5");
-
-
-//        BitSet a=new BitSet(8);
-//        a.set(0);
-//        a.set(1);
-//        a.set(5);
-//
-//        byte[] b=a.toByteArray();
-//
-//        BitSet c=fromByte(b[0]);
-
-      //  TESTinsertRecord();
-
-     //   SeqFileSystem.printAllRecords(new RandomAccessFile("instructor.dat","rw"));
-
-            TESTinsertTXT();
 
 
     }
 
+    static void test_join_insertion() throws IOException {
+        SeqFileSystem.createNewSeqFile("instructor;ID name dept_name salary;5 5 7 5");
+        SeqFileSystem.insertRecordsByTxt("/Users/duhoe/Desktop/dev/DBSystem/DBS-design1/instructor_input.txt");
+
+        SeqFileSystem.createNewSeqFile("teaches;ID course_id sec_id semester year;5 4 4 1 4");
+        SeqFileSystem.insertRecordsByTxt("/Users/duhoe/Desktop/dev/DBSystem/DBS-design1/teaches_input.txt");
+
+        RandomAccessFile seqFile1=new RandomAccessFile("instructor.dat","rw");
+        RandomAccessFile seqFile2=new RandomAccessFile("teaches.dat","rw");
+
+        SeqFileSystem.printAllRecords(seqFile1);
+        SeqFileSystem.printAllRecords(seqFile2);
+    }
+
+    static void test_join(String table1, String table2) throws IOException {
+        SeqFileSystem.join(table1,table2);
+        MysqlSystem.join(table1,table2);
+    }
 
 
     public static void TESTinsertRecord() throws IOException {
@@ -46,14 +47,14 @@ public class test {
         String[] attrs={"00001","Duhoe","compsci","10000"};
         int offset=0;
         Record record=new Record(bitset,attrs,offset);
-        SeqFileSystem.insertRecord("instructor",record );
+        SeqFileSystem.insertRecord2("instructor",record );
 
-        BitSet bitset4 = new BitSet(8);
-        String[] attrs4={"00004","fourr","adsdsds","44000"};
-        int offset4=0;
-        Record record4=new Record(bitset4,attrs4,offset4);
-        SeqFileSystem.insertRecord("instructor",record4 );
-
+//        BitSet bitset4 = new BitSet(8);
+//        String[] attrs4={"00004","fourr","adsdsds","44000"};
+//        int offset4=0;
+//        Record record4=new Record(bitset4,attrs4,offset4);
+//        SeqFileSystem.insertRecord("instructor",record4 );
+//
         BitSet bitset2 = new BitSet(8);
         String[] attrs2={"00002","holly","compsce","12000"};
         int offset2=0;
@@ -90,10 +91,9 @@ public class test {
     }
 
 
-    public static void TESTinsertTXT() throws IOException {
+    public static void test_insertTxt(String txtPath) throws IOException {
         SeqFileSystem.createNewSeqFile("instructor;ID name dept_name salary;5 5 7 5");
         SeqFileSystem.insertRecordsByTxt("/Users/duhoe/Desktop/dev/DBSystem/DBS-design1/record_input.txt");
-        SeqFileSystem.printAllRecords(new RandomAccessFile("instructor.dat","rw"));
     }
 
 

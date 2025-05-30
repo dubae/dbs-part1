@@ -1,5 +1,8 @@
 package org.example.object;
 
+import org.example.utility.BitUtility;
+
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -36,14 +39,40 @@ public class Record {
         this.nextOffset = nextOffset;
     }
 
-//    public byte[] toByteArray() {
-//        byte[] bytes = new byte[size];
-//
-//
-//        //널비트맵
-//        bytes[0] = bitSet.toByteArray()[0];
-//
-//    }
+    public Record(Byte[] bytes) {
+        size=bytes.length;
+        this.bitSet = BitUtility.getBitSetfromByte(bytes[0]); //null bitmap
+
+
+    }
+
+    public byte[] toBytes() {
+        byte[] bytes = new byte[size];
+
+
+
+        //널비트맵
+        byte[] byteArray = bitSet.toByteArray();
+        if (byteArray.length > 0) {
+            bytes[0] = byteArray[0];
+        } else {
+            bytes[0] = 0; // 기본값 설정
+        }
+        int i=1;
+        for(String attr : attrs){
+            byte[] attrBytes = attr.getBytes();
+            for(byte b : attrBytes){
+                bytes[i++]=b;
+            }
+
+        }
+        byte[] numBytes = ByteBuffer.allocate(4).putInt(nextOffset).array();
+        for(byte b : numBytes){
+            bytes[i++]=b;
+        }
+        return bytes;
+
+    }
 
     public void print(){
         System.out.println("=== Record Info ===");

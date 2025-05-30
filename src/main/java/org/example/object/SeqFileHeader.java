@@ -12,13 +12,13 @@ public class SeqFileHeader {
     int attrNum;
     int recordNum;
     int lastBlockOffset;
-    int[] charSize;
+    int[] attrSize;
     String[] attrs;
 
-    public SeqFileHeader(int recordPointer, int attrNum, int recordNum, int lastBlockOffset, int[] charSize, String[] attrs) {
+    public SeqFileHeader(int recordPointer, int attrNum, int recordNum, int lastBlockOffset, int[] attrSize, String[] attrs) {
         this.recordPointer = recordPointer;
         this.attrNum = attrNum;
-        this.charSize = charSize;
+        this.attrSize = attrSize;
         this.attrs = attrs;
         this.recordNum = recordNum;
         this.lastBlockOffset = lastBlockOffset;
@@ -35,8 +35,8 @@ public class SeqFileHeader {
     public int getRecordNum() {
         return recordNum;
     }
-    public int[] getCharSize() {
-        return charSize;
+    public int[] getAttrSize() {
+        return attrSize;
     }
 
     public int getLastBlockOffset() {
